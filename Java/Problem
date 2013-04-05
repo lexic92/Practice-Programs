@@ -1,0 +1,76 @@
+ERROR: Non-static variable super cannot be referenced from static context: PrivateSubclass line 19. ("super.print()")
+
+
+package ExampleSourceFiles;
+
+public class Private
+{
+	public static int num;
+	
+
+	//There is no constructor, so it should make a default constructor.
+
+	public Private(){
+		System.out.println("It's different!!!");
+	} 
+	public Private(int i)
+	{
+		System.out.println("You chose the number "+i+"!");
+	}
+
+	public String toString()
+	{
+		return "Private toString: num = " + num;
+	}
+
+	public static void print()
+	{
+		System.out.println("SUPER'S PRINTMETHOD");
+	}
+}
+
+package ExampleSourceFiles;
+
+public class PrivateSubclass extends Private
+{
+	int num2;
+	//This class should call the base class zero-param constructor, then apply default constructor for itself.
+	
+	public PrivateSubclass()
+	{	
+		super(4);
+		System.out.print("PrivateSubclass constructor.");
+	}
+	public String toString()
+	{
+		return "Subclass toString: num2: " + num2 + "num: " + num;
+	}
+	public static void print()
+	{
+		super.print();
+		System.out.println("SUB'S PRINTMETHOD");
+	}
+	
+
+}
+package OutsidePackage;
+
+
+
+
+public class Tester
+{
+	public static void main(String[] args)
+	{
+		
+		ExampleSourceFiles.PrivateSubclass obj2 = new ExampleSourceFiles.PrivateSubclass();
+		System.out.print(obj2);
+		//should say "num2: 0 num1: 0"
+		obj2.print();
+		System.out.print(obj2.num);
+	}	
+
+	
+}
+
+
